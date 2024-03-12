@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Floor</title>
+        <%- include('../partials/head') %>
+        <%- include('../partials/header') %>
+    </head>
+    <body>
+        <header class="bg-dark text-white">
+            <div class="container">
+                <h1 class="text-center m-4">Floor Page</h1>
+            </div>
+        </header>
+
+        <div class="text-center">
+        <a class="btn btn-primary js-scroll-trigger" href="#addFloorSection">Add New Floor</a>
+        </div>
+
+        <section class="container text-center mt-4">
+            <% if (floorArray) { %>
+                <ul class="list-group">
+                    <% floorArray.forEach(function(floor) { %>
+                        <li class="list-group-item">
+                            <strong>Level:</strong> <%= floor.floor_level %><br>
+                            <strong>Name:</strong> <%= floor.floor_name %><br><br>
+    
+    
+                            <!-- UPDATE FORM -->
+                            <form id="updateForm" method="POST" action="/update-floor" style="display:inline;">
+                                <label for="updatedLevel">Updated Level:</label>
+                                <input type="text" id="updatedLevel" name="updatedLevel" placeholder="Enter updated level" class="form-control">
+    
+                                <label for="updatedName">Updated Name:</label>
+                                <input type="text" id="updatedName" name="updatedName" placeholder="Enter updated name" class="form-control">
+    
+                                <input type="hidden" id="floorId" name="floor_id" value="<%= floor.floor_id %>"> <!-- hidden floor id -->
+    
+                                <button type="submit" class="btn btn-primary mt-4">Update Floor</button>
+                            </form>
+                            <br><br>
+
+                            <!-- DELETE BUTTON -->
+                            <form method="POST" action="/delete-floor" style="display:inline;">
+                                <input type="hidden" name="floor_id" value="<%= floor.floor_id %>"> <!-- hidden floor id -->
+                                <button type="submit" class="btn btn-danger mb-4">Delete Floor</button>
+                            </form><br>
+                        </li>
+                    <% }); %>
+                </ul>
+            <% } %>
+        </section>
+
+        <section id="addFloorSection" class="container text-center mt-4">
+            <!-- POST FORM -->
+            <h2>ADD A FLOOR</h2><br>
+            <form action="/floor" method="post">
+                <div class="form-group">
+                    <label for="floorLevel">New Floor Level:</label>
+                    <input type="number" id="floorLevel" name="floorLevel" required class="form-control">
+                </div><br>
+    
+                <div class="form-group">
+                    <label for="floorName">New Floor Name:</label>
+                    <input type="text" id="floorName" name="floorName" required class="form-control">
+                </div>
+                
+                <button type="submit" class="btn btn-success mt-4 m-4">Add Floor</button>
+            </form>
+        </section>
+        
+    </body>
+</html>

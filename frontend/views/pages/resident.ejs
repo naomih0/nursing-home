@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Resident</title>
+        <%- include('../partials/head') %>
+        <%- include('../partials/header') %>
+    </head>
+
+    <body>
+        <header class="bg-dark text-white">
+            <div class="container">
+                <h1 class="text-center m-4">Resident Page</h1>
+            </div>
+        </header>
+
+        <div class="text-center">
+            <a class="btn btn-primary js-scroll-trigger" href="#addResidentSection">Add New Resident</a>
+            </div>
+
+        <section class="container text-center mt-4">
+            <% if (residentArray) { %>
+                <ul class="list-group">
+                    <% residentArray.forEach(function(resident) { %>
+                        <li class="list-group-item">
+                            <strong>First Name:</strong> <%= resident.resident_firstname %><br>
+                            <strong>Last Name:</strong> <%= resident.resident_lastname %><br>
+                            <strong>Age:</strong> <%= resident.resident_age %><br>
+                            <strong>Room Number:</strong> <%= resident.room_number %><br><br>
+        
+                            <!-- UPDATE FORM -->
+                            <form id="updateForm" method="POST" action="/update-resident" style="display:inline;">
+                                <div class="form-group">
+                                    <label for="residentFirstName">Updated First Name:</label>
+                                    <input type="text" id="residentFirstName" name="residentFirstName" placeholder="Enter updated first name" class="form-control">
+                                </div>
+        
+                                <div class="form-group">
+                                    <label for="residentLastName">Updated Last Name:</label>
+                                    <input type="text" id="residentLastName" name="residentLastName" placeholder="Enter updated last name" class="form-control">
+                                </div>
+        
+                                <div class="form-group">
+                                    <label for="residentAge">Updated Age:</label>
+                                    <input type="number" id="residentAge" name="residentAge" placeholder="Enter updated age" class="form-control">
+                                </div>
+        
+                                <div class="form-group">
+                                    <label for="roomNum">New Room Number:</label>
+                                    <select id="roomNum" name="roomNum" class="form-control" required>                 
+                                        <option value="" hidden>Select a Room - Dropdown Box</option>
+                                        <% roomArray.forEach(function(room) { %>
+                                            <option value="<%= room.room_number %>">Room <%= room.room_number %></option>
+                                        <% }); %>
+                                    </select>
+                                </div>
+        
+                                <input type="hidden" id="residentId" name="resident_id" value="<%= resident.resident_id %>"> <!-- hidden resident id -->
+        
+                                <button type="submit" class="btn btn-primary mt-4">Update Resident</button>
+                            </form>
+                            <br><br>
+
+                            <!-- DELETE BUTTON -->
+                            <form method="POST" action="/delete-resident" style="display:inline;">
+                                <input type="hidden" name="resident_id" value="<%= resident.resident_id %>"> <!-- hidden resident id -->
+                                <button type="submit" class="btn btn-danger mb-4">Delete Resident</button>
+                            </form>
+                            <br>
+                        </li>
+                    <% }); %>
+                </ul>
+            <% } %>
+        </section>
+        
+        <section id="addResidentSection" class="container text-center mt-4">
+            <!-- POST FORM -->
+            <h2>ADD A RESIDENT</h2><br>
+            <form action="/resident" method="post">
+                <div class="form-group">
+                    <label for="residentFirstName">New First Name:</label>
+                    <input type="text" id="residentFirstName" name="residentFirstName" required class="form-control">
+                </div>
+        
+                <div class="form-group">
+                    <label for="residentLastName">New Last Name:</label>
+                    <input type="text" id="residentLastName" name="residentLastName" required class="form-control">
+                </div>
+        
+                <div class="form-group">
+                    <label for="residentAge">New Resident Age:</label>
+                    <input type="number" id="residentAge" name="residentAge" required class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="roomNum">New Room Number:</label>
+                    <select id="roomNum" name="roomNum" class="form-control" required>                 
+                        <option value="" hidden>Select a Room - Dropdown Box</option>
+                        <% roomArray.forEach(function(room) { %>
+                            <option value="<%= room.room_number %>">Room <%= room.room_number %></option>
+                        <% }); %>
+                    </select>
+                </div>
+        
+                <button type="submit" class="btn btn-success mt-4 m-4">Add Resident</button>
+            </form>
+        </section>
+        
+
+    </body>
+</html>

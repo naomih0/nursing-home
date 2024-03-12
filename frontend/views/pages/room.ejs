@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Room</title>
+        <%- include('../partials/head') %>
+        <%- include('../partials/header') %>
+    </head>
+
+    <body>
+        <header class="bg-dark text-white">
+            <div class="container">
+                <h1 class="text-center m-4">Room Page</h1>
+            </div>
+        </header>
+
+        <div class="text-center">
+            <a class="btn btn-primary js-scroll-trigger" href="#addRoomSection">Add New Room</a>
+            </div>
+
+        <section class="container text-center mt-4">
+            <% if (roomArray) { %>
+                <ul class="list-group">
+                    <% roomArray.forEach(function(room) { %>
+                        <li class="list-group-item">
+                            <strong>Number:</strong> <%= room.room_number %><br>
+                            <strong>Capacity:</strong> <%= room.room_capacity %><br>
+                            <strong>Floor Level:</strong> <%= room.floor_level %><br><br>
+        
+                            
+        
+                            <!-- UPDATE FORM -->
+                            <form id="updateForm" method="POST" action="/update-room" style="display:inline;">
+                                <div class="form-group">
+                                    <label for="updatedRoomNum">Updated Room Number:</label>
+                                    <input type="number" id="updatedRoomNum" name="updatedRoomNum" placeholder="Enter updated room number" class="form-control">
+                                </div>
+        
+                                <div class="form-group">
+                                    <label for="updatedRoomCapacity">Updated Room Capacity:</label>
+                                    <input type="number" id="updatedRoomCapacity" name="updatedRoomCapacity" placeholder="Enter updated capacity" class="form-control">
+                                </div>
+        
+                                <div class="form-group">
+                                    <label for="floorLevel">New Floor Level:</label>
+                                    <select id="floorLevel" name="floorLevel" class="form-control" required>                 
+                                        <option value="" hidden>Select a Floor - Dropdown Box</option>
+                                        <% floorArray.forEach(function(floor) { %>
+                                            <option value="<%= floor.floor_level %>">Floor <%= floor.floor_level %></option>
+                                        <% }); %>
+                                    </select>
+                                </div>
+        
+                                <input type="hidden" id="roomId" name="room_id" value="<%= room.room_id %>"> <!-- hidden room id -->
+        
+                                <button type="submit" class="btn btn-primary mt-4">Update Room</button>
+                            </form>
+                            <br><br>
+
+                            <!-- DELETE BUTTON -->
+                            <form method="POST" action="/delete-room" style="display:inline;">
+                                <input type="hidden" name="room_id" value="<%= room.room_id %>"> <!-- hidden room id -->
+                                <button type="submit" class="btn btn-danger mb-4">Delete Room</button>
+                            </form>
+                            <br>
+                        </li>
+                    <% }); %>
+                </ul>
+            <% } %>
+        </section>
+        
+        <section id="addRoomSection" class="container text-center mt-4">
+            <!-- POST FORM -->
+            <h2>ADD A ROOM</h2><br>
+            <form action="/room" method="post">
+                <div class="form-group">
+                    <label for="roomNum">New Room Number:</label>
+                    <input type="number" id="roomNum" name="roomNum" required class="form-control">
+                </div>
+        
+                <div class="form-group">
+                    <label for="roomCapacity">New Room Capacity:</label>
+                    <input type="number" id="roomCapacity" name="roomCapacity" required class="form-control">
+                </div>
+        
+                <div class="form-group">
+                    <label for="floorLevel">New Floor Level:</label>
+                    <select id="floorLevel" name="floorLevel" class="form-control" required>                 
+                        <option value="" hidden>Select a Floor - Dropdown Box</option>
+                        <% floorArray.forEach(function(floor) { %>
+                            <option value="<%= floor.floor_level %>">Floor <%= floor.floor_level %></option>
+                        <% }); %>
+                    </select>
+                </div>
+        
+                <button type="submit" class="btn btn-success mt-4 m-4">Add Room</button>
+            </form>
+        </section>
+        
+
+    </body>
+</html>
