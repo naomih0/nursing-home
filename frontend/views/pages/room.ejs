@@ -9,7 +9,7 @@
     <body>
         <header class="bg-dark text-white">
             <div class="container">
-                <h1 class="text-center m-4">Room Page</h1>
+                <h1 class="text-center m-4 p-2">Room Page</h1>
             </div>
         </header>
 
@@ -22,14 +22,15 @@
                 <ul class="list-group">
                     <% roomArray.forEach(function(room, index) { %>
                         <li class="list-group-item">
-                            <strong>Number:</strong> <%= room.room_number %><br>
-                            <strong>Capacity:</strong> <%= room.room_capacity %><br>
-                            <strong>Floor Level:</strong> <%= room.floor_level %><br><br>
+                            <strong class="h4">Number:</strong> <span class="h4" style="font-weight: normal;"><%= room.room_number %></span><br>
+                            <strong class="h4">Capacity:</strong> <span class="h4" style="font-weight: normal;"><%= room.room_capacity %></span><br>
+                            <strong class="h4">Floor Level:</strong> <span class="h4" style="font-weight: normal;"><%= room.floor_level %></span><br><br>
+                            
           
                             <div style="display: flex; flex-direction: column;"">
                                  <!-- UPDATE FORM TOGGLE BUTTON -->
                                  <div>
-                                    <button class="btn btn-secondary mt-4 toggle-button" type="button">
+                                    <button class="btn btn-secondary mt-2 toggle-button" type="button">
                                         Toggle Update Form
                                     </button>
                                 </div>
@@ -62,7 +63,7 @@
                                 <!-- DELETE BUTTON -->
                                 <form method="POST" action="/delete-room" style="display:inline;">
                                     <input type="hidden" name="room_id" value="<%= room.room_id %>"> <!-- hidden room id -->
-                                    <button type="submit" class="btn btn-danger mt-4">Delete Room</button>
+                                    <button type="submit" class="btn btn-danger mt-2">Delete Room</button>
                                 </form>
                             </div>
 
@@ -72,7 +73,7 @@
             <% } %>
         </section>
         
-        <section id="addRoomSection" class="container text-center mt-4">
+        <section id="addRoomSection" class="container text-center mt-4 p-3">
             <!-- POST FORM -->
             <h2>ADD A ROOM</h2><br>
             <form action="/room" method="post">

@@ -9,7 +9,7 @@
     <body>
         <header class="bg-dark text-white">
             <div class="container">
-                <h1 class="text-center m-4">Resident Page</h1>
+                <h1 class="text-center m-4 p-2">Resident Page</h1>
             </div>
         </header>
 
@@ -22,15 +22,16 @@
                 <ul class="list-group">
                     <% residentArray.forEach(function(resident, index) { %>
                         <li class="list-group-item">
-                            <strong>First Name:</strong> <%= resident.resident_firstname %><br>
-                            <strong>Last Name:</strong> <%= resident.resident_lastname %><br>
-                            <strong>Age:</strong> <%= resident.resident_age %><br>
-                            <strong>Room Number:</strong> <%= resident.room_number %><br><br>
+                            <strong class="h4">First Name:</strong> <span class="h4" style="font-weight: normal;"><%= resident.resident_firstname %></span><br>
+                            <strong class="h4"">Last Name:</strong> <span class="h4" style="font-weight: normal;"><%= resident.resident_lastname %></span><br>
+                            <strong class="h4">Age:</strong> <span class="h4" style="font-weight: normal;"><%= resident.resident_age %></span><br>
+                            <strong class="h4">Room Number:</strong> <span class="h4" style="font-weight: normal;"><%= resident.room_number %></span><br><br>
+                            
 
                         <div style="display: flex; flex-direction: column;"">
                             <!-- UPDATE FORM TOGGLE BUTTON -->
                             <div>
-                                <button class="btn btn-secondary mt-4 toggle-button" type="button">
+                                <button class="btn btn-secondary mt-2 toggle-button" type="button">
                                     Toggle Update Form
                                 </button>
                             </div>
@@ -66,7 +67,7 @@
                             <!-- DELETE BUTTON -->
                             <form method="POST" action="/delete-resident" style="display:inline;">
                                 <input type="hidden" name="resident_id" value="<%= resident.resident_id %>"> <!-- hidden resident id -->
-                                <button type="submit" class="btn btn-danger mt-4">Delete Resident</button>
+                                <button type="submit" class="btn btn-danger mt-2">Delete Resident</button>
                             </form>
                         </div>
                     </li>
@@ -75,7 +76,7 @@
             <% } %>
         </section>
         
-        <section id="addResidentSection" class="container text-center mt-4">
+        <section id="addResidentSection" class="container text-center mt-4 p-3">
             <!-- POST FORM -->
             <h2>ADD A RESIDENT</h2><br>
             <form action="/resident" method="post">
@@ -104,7 +105,7 @@
                     </select>
                 </div>
         
-                <button type="submit" class="btn btn-success mt-4 m-4">Add Resident</button>
+                <button type="submit" class="btn btn-success mt-2 m-4">Add Resident</button>
             </form>
         </section>
 

@@ -9,7 +9,7 @@
     <body>   
         <header class="bg-dark text-white">
             <div class="container">
-                <h1 class="text-center m-4">Floor Page</h1>
+                <h1 class="text-center m-4 p-2">Floor Page</h1>
             </div>
         </header>
 
@@ -22,14 +22,15 @@
                 <ul class="list-group">
                     <% floorArray.forEach(function(floor, index) { %>
                         <li class="list-group-item">
-                            <strong>Level:</strong> <%= floor.floor_level %><br>
-                            <strong>Name:</strong> <%= floor.floor_name %><br><br>
+                            <strong class="h4">Level:</strong> <span class="h4" style="font-weight: normal;"><%= floor.floor_level %></span><br>
+                            <strong class="h4">Name:</strong> <span class="h4" style="font-weight: normal;"><%= floor.floor_name %></span><br><br>
+                            
     
                             <div style="display: flex; flex-direction: column;">
 
                                 <!-- UPDATE FORM TOGGLE BUTTON -->
                                 <div>
-                                    <button class="btn btn-secondary mt-4 toggle-button" type="button">
+                                    <button class="btn btn-secondary mt-2 toggle-button" type="button">
                                         Toggle Update Form
                                     </button>
                                 </div>
@@ -52,7 +53,7 @@
                                 <!-- DELETE BUTTON -->
                                 <form method="POST" action="/delete-floor">
                                     <input type="hidden" name="floor_id" value="<%= floor.floor_id %>"> <!-- hidden floor id -->
-                                    <button type="submit" class="btn btn-danger mt-4">Delete Floor</button>
+                                    <button type="submit" class="btn btn-danger mt-2">Delete Floor</button>
                                 </form>
                             </div>
                             
@@ -62,7 +63,7 @@
             <% } %>
         </section>
 
-        <section id="addFloorSection" class="container text-center mt-4">
+        <section id="addFloorSection" class="container text-center mt-4 p-3">
             <!-- POST FORM -->
             <h2>ADD A FLOOR</h2><br>
             <form action="/floor" method="post">
@@ -76,7 +77,7 @@
                     <input type="text" id="floorName" name="floorName" required class="form-control">
                 </div>
                 
-                <button type="submit" class="btn btn-success mt-4 m-4">Add Floor</button>
+                <button type="submit" class="btn btn-success mt-2 m-4">Add Floor</button>
             </form>
         </section>
 
