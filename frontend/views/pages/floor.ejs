@@ -5,7 +5,8 @@
         <%- include('../partials/head') %>
         <%- include('../partials/header') %>
     </head>
-    <body>
+
+    <body>   
         <header class="bg-dark text-white">
             <div class="container">
                 <h1 class="text-center m-4">Floor Page</h1>
@@ -19,31 +20,42 @@
         <section class="container text-center mt-4">
             <% if (floorArray) { %>
                 <ul class="list-group">
-                    <% floorArray.forEach(function(floor) { %>
+                    <% floorArray.forEach(function(floor, index) { %>
                         <li class="list-group-item">
                             <strong>Level:</strong> <%= floor.floor_level %><br>
                             <strong>Name:</strong> <%= floor.floor_name %><br><br>
     
-    
-                            <!-- UPDATE FORM -->
-                            <form id="updateForm" method="POST" action="/update-floor" style="display:inline;">
-                                <label for="updatedLevel">Updated Level:</label>
-                                <input type="text" id="updatedLevel" name="updatedLevel" placeholder="Enter updated level" class="form-control">
-    
-                                <label for="updatedName">Updated Name:</label>
-                                <input type="text" id="updatedName" name="updatedName" placeholder="Enter updated name" class="form-control">
-    
-                                <input type="hidden" id="floorId" name="floor_id" value="<%= floor.floor_id %>"> <!-- hidden floor id -->
-    
-                                <button type="submit" class="btn btn-primary mt-4">Update Floor</button>
-                            </form>
-                            <br><br>
+                            <div style="display: flex; flex-direction: column;">
 
-                            <!-- DELETE BUTTON -->
-                            <form method="POST" action="/delete-floor" style="display:inline;">
-                                <input type="hidden" name="floor_id" value="<%= floor.floor_id %>"> <!-- hidden floor id -->
-                                <button type="submit" class="btn btn-danger mb-4">Delete Floor</button>
-                            </form><br>
+                                <!-- UPDATE FORM TOGGLE BUTTON -->
+                                <div>
+                                    <button class="btn btn-secondary mt-4 toggle-button" type="button">
+                                        Toggle Update Form
+                                    </button>
+                                </div>
+        
+                                <!-- UPDATE FORM COLLAPSE -->
+                                <div id="updateFormCollapse<%= index %>" class="collapse">
+                                    <form id="updateForm<%= index %>" method="POST" action="/update-floor">
+                                        <label for="updatedLevel">Updated Level:</label>
+                                        <input type="text" id="updatedLevel" name="updatedLevel" placeholder="Enter updated level" class="form-control">
+
+                                        <label for="updatedName">Updated Name:</label>
+                                        <input type="text" id="updatedName" name="updatedName" placeholder="Enter updated name" class="form-control">
+
+                                        <input type="hidden" id="floorId" name="floor_id" value="<%= floor.floor_id %>"> <!-- hidden floor id -->
+
+                                        <button type="submit" class="btn btn-primary mt-4">Update Floor</button>
+                                    </form>
+                                </div>
+
+                                <!-- DELETE BUTTON -->
+                                <form method="POST" action="/delete-floor">
+                                    <input type="hidden" name="floor_id" value="<%= floor.floor_id %>"> <!-- hidden floor id -->
+                                    <button type="submit" class="btn btn-danger mt-4">Delete Floor</button>
+                                </form>
+                            </div>
+                            
                         </li>
                     <% }); %>
                 </ul>
@@ -67,6 +79,20 @@
                 <button type="submit" class="btn btn-success mt-4 m-4">Add Floor</button>
             </form>
         </section>
-        
+
+        <script>
+
+            function toggleUpdateForm(index) {
+                let updateFormCollapse = document.getElementById("updateFormCollapse" + index);
+                updateFormCollapse.classList.toggle("show");
+            };
+
+            const toggleButtons = document.querySelectorAll('.toggle-button');
+            toggleButtons.forEach((button, i) => {
+                button.addEventListener('click', () => {
+                    toggleUpdateForm(i);
+                });
+            });
+        </script> 
     </body>
 </html>

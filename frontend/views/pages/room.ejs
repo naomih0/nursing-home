@@ -20,48 +20,52 @@
         <section class="container text-center mt-4">
             <% if (roomArray) { %>
                 <ul class="list-group">
-                    <% roomArray.forEach(function(room) { %>
+                    <% roomArray.forEach(function(room, index) { %>
                         <li class="list-group-item">
                             <strong>Number:</strong> <%= room.room_number %><br>
                             <strong>Capacity:</strong> <%= room.room_capacity %><br>
                             <strong>Floor Level:</strong> <%= room.floor_level %><br><br>
-        
-                            
-        
-                            <!-- UPDATE FORM -->
-                            <form id="updateForm" method="POST" action="/update-room" style="display:inline;">
-                                <div class="form-group">
-                                    <label for="updatedRoomNum">Updated Room Number:</label>
-                                    <input type="number" id="updatedRoomNum" name="updatedRoomNum" placeholder="Enter updated room number" class="form-control">
+          
+                            <div style="display: flex; flex-direction: column;"">
+                                 <!-- UPDATE FORM TOGGLE BUTTON -->
+                                 <div>
+                                    <button class="btn btn-secondary mt-4 toggle-button" type="button">
+                                        Toggle Update Form
+                                    </button>
                                 </div>
-        
-                                <div class="form-group">
-                                    <label for="updatedRoomCapacity">Updated Room Capacity:</label>
-                                    <input type="number" id="updatedRoomCapacity" name="updatedRoomCapacity" placeholder="Enter updated capacity" class="form-control">
-                                </div>
-        
-                                <div class="form-group">
-                                    <label for="floorLevel">New Floor Level:</label>
-                                    <select id="floorLevel" name="floorLevel" class="form-control" required>                 
-                                        <option value="" hidden>Select a Floor - Dropdown Box</option>
-                                        <% floorArray.forEach(function(floor) { %>
-                                            <option value="<%= floor.floor_level %>">Floor <%= floor.floor_level %></option>
-                                        <% }); %>
-                                    </select>
-                                </div>
-        
-                                <input type="hidden" id="roomId" name="room_id" value="<%= room.room_id %>"> <!-- hidden room id -->
-        
-                                <button type="submit" class="btn btn-primary mt-4">Update Room</button>
-                            </form>
-                            <br><br>
 
-                            <!-- DELETE BUTTON -->
-                            <form method="POST" action="/delete-room" style="display:inline;">
-                                <input type="hidden" name="room_id" value="<%= room.room_id %>"> <!-- hidden room id -->
-                                <button type="submit" class="btn btn-danger mb-4">Delete Room</button>
-                            </form>
-                            <br>
+                                <!-- UPDATE FORM COLLAPSE -->
+                                <div id="updateFormCollapse<%= index %>" class="collapse">
+                                    <form id="updateForm<%= index %>" method="POST" action="/update-room">
+                                        <div class="form-group">
+                                            <label for="updatedRoomNum">Updated Room Number:</label>
+                                            <input type="number" id="updatedRoomNum" name="updatedRoomNum" placeholder="Enter updated room number" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="updatedRoomCapacity">Updated Room Capacity:</label>
+                                            <input type="number" id="updatedRoomCapacity" name="updatedRoomCapacity" placeholder="Enter updated capacity" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="floorLevel">New Floor Level:</label>
+                                            <select id="floorLevel" name="floorLevel" class="form-control" required>
+                                                <option value="" hidden>Select a Floor - Dropdown Box</option>
+                                                <% floorArray.forEach(function(floor) { %>
+                                                    <option value="<%= floor.floor_level %>">Floor <%= floor.floor_level %></option>
+                                                <% }); %>
+                                            </select>
+                                        </div>
+                                        <input type="hidden" id="roomId" name="room_id" value="<%= room.room_id %>"> <!-- hidden room id -->
+                                        <button type="submit" class="btn btn-primary mt-4">Update Room</button>
+                                    </form>
+                                </div>
+
+                                <!-- DELETE BUTTON -->
+                                <form method="POST" action="/delete-room" style="display:inline;">
+                                    <input type="hidden" name="room_id" value="<%= room.room_id %>"> <!-- hidden room id -->
+                                    <button type="submit" class="btn btn-danger mt-4">Delete Room</button>
+                                </form>
+                            </div>
+
                         </li>
                     <% }); %>
                 </ul>
@@ -92,10 +96,22 @@
                     </select>
                 </div>
         
-                <button type="submit" class="btn btn-success mt-4 m-4">Add Room</button>
+                <button type="submit" class="btn btn-success mt-4">Add Room</button>
             </form>
         </section>
         
+        <script>
+            function toggleUpdateForm(index) {
+                let updateFormCollapse = document.getElementById("updateFormCollapse" + index);
+                updateFormCollapse.classList.toggle("show");
+            };
 
+            const toggleButtons = document.querySelectorAll('.toggle-button');
+            toggleButtons.forEach((button, i) => {
+                button.addEventListener('click', () => {
+                    toggleUpdateForm(i);
+                });
+            });
+        </script> 
     </body>
 </html>
