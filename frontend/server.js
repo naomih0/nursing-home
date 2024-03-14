@@ -287,31 +287,50 @@ app.post('/update-room', function(req, res) {
     const updatedfloorLevel = req.body.updatedfloorLevel;
     const updatedRoomCapacity = req.body.updatedRoomCapacity;
     const updatedRoomNum = req.body.updatedRoomNum;
+
     const roomId = req.body.room_id;
 
-    // Url for the Flask API; including the roomId as a query parameter
-    const url = `http://127.0.0.1:5000/room?id=${roomId}`;
+    const floorUrl = 'http://127.0.0.1:5000/floor/all'; 
 
-    // Create an object to hold the data to be updated
-    const updatedData = {};
+     // GET request to fetch floor data
+    axios.get(floorUrl)
+    .then(floorResponse => {
+        // Extract floor data from the response
+        const floorArray = floorResponse.data;
 
-    // Check to see which data is provided to be added to the updatedData object
-    if (updatedfloorLevel) {
-        updatedData.floor_level = updatedfloorLevel;
-    }
-    if (updatedRoomCapacity) {
-        updatedData.room_capacity = updatedRoomCapacity;
-    }
-    if (updatedRoomNum) {
-        updatedData.room_number = updatedRoomNum;
-    }
+        // Find the floor that matches the specified floor level (since user can only provide floor level and not id)
+        const floor = floorArray.find(floor => floor.floor_level === parseInt(updatedfloorLevel));
 
-    // PUT request to the Flask API with the updated data
-    axios.put(url, updatedData)
-        .then(() => {
-            // Refresh page if successful
-            res.redirect('/room');
-        })
+        // Url for the Flask API; including the roomId as a query parameter
+        const url = `http://127.0.0.1:5000/room?id=${roomId}`;
+
+        // Create an object to hold the data to be updated
+        const updatedData = {};
+
+        if (floor) {
+            // Extract the floor_id corresponding to the selected floor level
+            const floorId = floor.floor_id;
+
+            if (floorId) {
+                updatedData.floor_id = floorId;
+            };
+        };
+
+        // Check to see which data is provided to be added to the updatedData object
+        if (updatedRoomCapacity) {
+            updatedData.room_capacity = updatedRoomCapacity;
+        };
+        if (updatedRoomNum) {
+            updatedData.room_number = updatedRoomNum;
+        };
+
+        // PUT request to the Flask API with the updated data
+        axios.put(url, updatedData)
+            .then(() => {
+                // Refresh page if successful
+                res.redirect('/room');
+        });
+    })
 
         .catch(error => {
             console.error('Error Response:', error.response);   
@@ -373,7 +392,6 @@ app.get('/resident', function(req, res) {
             const room = roomResponse.data[i];
             roomData[room.room_id] = room;
         }
-
         // Combine room and resident data
         const combinedData = [];
         for (let i = 0; i < residentArray.length; i++) {
@@ -455,37 +473,57 @@ app.post('/update-resident', function(req, res) {
     const residentLastName = req.body.residentLastName;
     const residentAge = req.body.residentAge;
     const roomNum = req.body.roomNum;
+
     const residentId = req.body.resident_id;
 
-    // Url for the Flask API; including the residentId as a query parameter
-    const url = `http://127.0.0.1:5000/resident?id=${residentId}`;
+    const roomUrl = 'http://127.0.0.1:5000/room/all'; 
 
-    // Create an object to hold the data to be updated
-    const updatedData = {};
+    // GET request to fetch room data
+    axios.get(roomUrl)
+    .then(roomResponse => {
 
-    // Check to see which data is provided to be added to the updatedData object
-    if (residentFirstName) {
-        updatedData.resident_firstname = residentFirstName;
-    }
-    if (residentLastName) {
-        updatedData.resident_lastname = residentLastName;
-    }
-    if (residentAge) {
-        updatedData.resident_age = residentAge;
-    }
-    if (roomNum) {
-        updatedData.room_number = roomNum;
-    }
+        // Extract room data from the response
+        const roomArray = roomResponse.data;
 
-    // PUT request to the Flask API with the updated data
-    axios.put(url, updatedData)
-        .then(() => {
-            // Refresh page if successful
-            res.redirect('/resident');
-        })
+        // Find the room that matches the specified room num (since user can only provide room num and not id)
+        const room = roomArray.find(room => room.room_number === parseInt(roomNum));
 
-        .catch(error => {
-            console.error('Error Response:', error.response);   
+        // Url for the Flask API; including the residentId as a query parameter
+        const url = `http://127.0.0.1:5000/resident?id=${residentId}`;
+
+        // Create an object to hold the data to be updated
+        const updatedData = {};
+
+        if (room) {
+            // Extract the room_id corresponding to the selected room number
+            const roomId = room.room_id;
+
+            if (roomId) {
+                updatedData.room_id = roomId; 
+            };
+        }; 
+
+        // Check to see which data is provided to be added to the updatedData object
+        if (residentFirstName) {
+            updatedData.resident_firstname = residentFirstName;
+        };
+        if (residentLastName) {
+            updatedData.resident_lastname = residentLastName;
+        };
+        if (residentAge) {
+            updatedData.resident_age = residentAge;
+        };
+
+        // PUT request to the Flask API with the updated data
+        axios.put(url, updatedData)
+            .then(() => {
+                // Refresh page if successful
+                res.redirect('/resident');
+        });
+    })
+
+    .catch(error => {
+        console.error('Error Response:', error.response);   
     });
 });
 

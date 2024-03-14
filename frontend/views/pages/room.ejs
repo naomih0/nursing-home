@@ -48,7 +48,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="floorLevel">New Floor Level:</label>
-                                            <select id="floorLevel" name="floorLevel" class="form-control" required>
+                                            <select id="floorLevel" name="floorLevel" class="form-control">
                                                 <option value="" hidden>Select a Floor - Dropdown Box</option>
                                                 <% floorArray.forEach(function(floor) { %>
                                                     <option value="<%= floor.floor_level %>">Floor <%= floor.floor_level %></option>
