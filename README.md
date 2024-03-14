@@ -3,10 +3,10 @@
 This project is from a previous semester's class assignment, now improved to showcase its full potential. It is an application for managing a nursing home, using operations through API requests to perform CRUD operations on three main entities: floors of the nursing home, rooms within those floors, and residents accommodated in those rooms. It uses MySQL for database management, Flask for the backend API development, and an Express/Axios/EJS/Bootstrap stack for the frontend interface.
 
 ## Features
-Nursing Home Management: Manage the operations of a nursing home by handling floors, rooms, and residents through API requests.
-MySQL Database: Utilizes MySQL for data storage and retrieval
-Flask Backend: Utilizes Flask to create APIs for handling GET, POST, PUT, and DELETE requests.
-Express/Axios/EJS/Bootstrap Frontend: Has a dynamic frontend interface using Express, Axios, EJS, and Bootstrap for seamless interaction with the backend.
+- Nursing Home Management: Manage the operations of a nursing home by handling floors, rooms, and residents through API requests.
+- MySQL Database: Utilizes MySQL for data storage and retrieval
+- Flask Backend: Utilizes Flask to create APIs for handling GET, POST, PUT, and DELETE requests.
+- Express/Axios/EJS/Bootstrap Frontend: Has a dynamic frontend interface using Express, Axios, EJS, and Bootstrap for seamless interaction with the backend.
 
 ## Installation/Special Circumstances 
 This project uses a local MySQL database, so the project is not deployable in its current state. It will not work on other machines as it relies on the database for all aspects. interested users should watch the video/gif demo below to understand the project's functionality. Also, look at the codebase to understand the project in more detail. 
